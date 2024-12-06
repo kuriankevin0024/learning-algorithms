@@ -10,19 +10,25 @@ public final class FixedArrayStack<T> implements Stack<T> {
 
     @SuppressWarnings("unchecked")
     public FixedArrayStack(int capacity) {
-        if (capacity <= 0) throw new IllegalArgumentException("Capacity must be positive");
+        if (capacity <= 0) {
+            throw new IllegalArgumentException("Capacity must be positive");
+        }
         stack = (T[]) new Object[capacity];
     }
 
     @Override
     public void push(T element) {
-        if (size == stack.length) throw new IllegalStateException("Stack is full");
+        if (size == stack.length) {
+            throw new IllegalStateException("Stack is full");
+        }
         stack[size++] = element;
     }
 
     @Override
     public T pop() {
-        if (isEmpty()) throw new NoSuchElementException("Stack is empty");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Stack is empty");
+        }
         T element = stack[--size];
         stack[size] = null;
         return element;
@@ -40,7 +46,9 @@ public final class FixedArrayStack<T> implements Stack<T> {
 
     @Override
     public T peek() {
-        if (isEmpty()) throw new NoSuchElementException("Stack is empty");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Stack is empty");
+        }
         return stack[size - 1];
     }
 
@@ -50,17 +58,19 @@ public final class FixedArrayStack<T> implements Stack<T> {
     }
 
     private class StackIterator implements Iterator<T> {
-        private int current = size;
+        private int currentIndex = size;
 
         @Override
         public boolean hasNext() {
-            return current > 0;
+            return currentIndex > 0;
         }
 
         @Override
         public T next() {
-            if (!hasNext()) throw new NoSuchElementException("No more elements in the stack.");
-            return stack[--current];
+            if (!hasNext()) {
+                throw new NoSuchElementException("No more elements in the stack.");
+            }
+            return stack[--currentIndex];
         }
     }
 

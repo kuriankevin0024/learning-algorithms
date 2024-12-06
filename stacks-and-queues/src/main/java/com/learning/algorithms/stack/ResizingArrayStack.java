@@ -15,16 +15,22 @@ public final class ResizingArrayStack<T> implements Stack<T> {
 
     @Override
     public void push(T element) {
-        if (size == stack.length) resize(2 * stack.length);
+        if (size == stack.length) {
+            resize(2 * stack.length);
+        }
         stack[size++] = element;
     }
 
     @Override
     public T pop() {
-        if (isEmpty()) throw new NoSuchElementException("Stack is empty");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Stack is empty");
+        }
         T element = stack[--size];
         stack[size] = null;
-        if (size > 0 && size == stack.length / 4) resize(stack.length / 2);
+        if (size > 0 && size == stack.length / 4) {
+            resize(stack.length / 2);
+        }
         return element;
     }
 
@@ -40,7 +46,9 @@ public final class ResizingArrayStack<T> implements Stack<T> {
 
     @Override
     public T peek() {
-        if (isEmpty()) throw new NoSuchElementException("Stack is empty");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Stack is empty");
+        }
         return stack[size - 1];
     }
 
@@ -57,17 +65,19 @@ public final class ResizingArrayStack<T> implements Stack<T> {
     }
 
     private class StackIterator implements Iterator<T> {
-        private int current = size;
+        private int currentIndex = size;
 
         @Override
         public boolean hasNext() {
-            return current > 0;
+            return currentIndex > 0;
         }
 
         @Override
         public T next() {
-            if (!hasNext()) throw new NoSuchElementException("No more elements in the stack.");
-            return stack[--current];
+            if (!hasNext()) {
+                throw new NoSuchElementException("No more elements in the stack.");
+            }
+            return stack[--currentIndex];
         }
     }
 }
