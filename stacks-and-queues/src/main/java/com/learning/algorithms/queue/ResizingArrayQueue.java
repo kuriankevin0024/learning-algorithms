@@ -3,7 +3,7 @@ package com.learning.algorithms.queue;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ResizingArrayQueue<T> implements Queue<T> {
+public final class ResizingArrayQueue<T> implements Queue<T> {
 
     private int size = 0;
     private int front = 0;
@@ -11,38 +11,28 @@ public class ResizingArrayQueue<T> implements Queue<T> {
     private T[] queue;
 
     @SuppressWarnings("unchecked")
-    public ResizingArrayQueue(int capacity) {
-        queue = (T[]) new Object[capacity];
+    public ResizingArrayQueue() {
+        queue = (T[]) new Object[1];
     }
 
     @Override
-    public void enqueue(T item) {
-        if (size == queue.length) {
-            resize(2 * queue.length);
-        }
-        queue[rear++] = item;
-        if (rear == queue.length) {
-            rear = 0;
-        }
+    public void enqueue(T element) {
+        if (size == queue.length) resize(2 * queue.length);
+        queue[rear++] = element;
+        if (rear == queue.length) rear = 0;
         size++;
     }
 
     @Override
     public T dequeue() {
-        if (isEmpty()) {
-            throw new NoSuchElementException("Queue is empty");
-        }
-        T item = queue[front];
+        if (isEmpty()) throw new NoSuchElementException("Queue is empty");
+        T element = queue[front];
         queue[front] = null;
         front++;
-        if (front == queue.length) {
-            front = 0;
-        }
+        if (front == queue.length) front = 0;
         size--;
-        if (size > 0 && size == queue.length / 4) {
-            resize(queue.length / 2);
-        }
-        return item;
+        if (size > 0 && size == queue.length / 4) resize(queue.length / 2);
+        return element;
     }
 
     @Override
@@ -57,9 +47,7 @@ public class ResizingArrayQueue<T> implements Queue<T> {
 
     @Override
     public T peek() {
-        if (isEmpty()) {
-            throw new NoSuchElementException("Queue is empty");
-        }
+        if (isEmpty()) throw new NoSuchElementException("Queue is empty");
         return queue[front];
     }
 
@@ -76,10 +64,10 @@ public class ResizingArrayQueue<T> implements Queue<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new ArrayIterator();
+        return new QueueIterator();
     }
 
-    private class ArrayIterator implements Iterator<T> {
+    private class QueueIterator implements Iterator<T> {
         private int currentIndex = 0;
 
         @Override
@@ -89,12 +77,10 @@ public class ResizingArrayQueue<T> implements Queue<T> {
 
         @Override
         public T next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException();
-            }
-            T item = queue[(front + currentIndex) % queue.length];
+            if (!hasNext()) throw new NoSuchElementException("No more elements in the queue.");
+            T element = queue[(front + currentIndex) % queue.length];
             currentIndex++;
-            return item;
+            return element;
         }
     }
 }

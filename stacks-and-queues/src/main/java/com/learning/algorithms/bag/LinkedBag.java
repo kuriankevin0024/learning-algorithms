@@ -1,9 +1,9 @@
-package com.learning.algorithms.stack;
+package com.learning.algorithms.bag;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public final class LinkedStack<T> implements Stack<T> {
+public final class LinkedBag<T> implements Bag<T> {
 
     private int size = 0;
     private Node<T> head = null;
@@ -18,25 +18,11 @@ public final class LinkedStack<T> implements Stack<T> {
     }
 
     @Override
-    public void push(T element) {
+    public void add(T element) {
         Node<T> newNode = new Node<>(element);
         newNode.next = head;
         head = newNode;
         size++;
-    }
-
-    @Override
-    public T pop() {
-        if (isEmpty()) throw new NoSuchElementException("Stack is empty");
-        T element = head.data;
-        head = head.next;
-        size--;
-        return element;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return size == 0;
     }
 
     @Override
@@ -45,17 +31,11 @@ public final class LinkedStack<T> implements Stack<T> {
     }
 
     @Override
-    public T peek() {
-        if (isEmpty()) throw new NoSuchElementException("Stack is empty");
-        return head.data;
-    }
-
-    @Override
     public Iterator<T> iterator() {
-        return new StackIterator();
+        return new BagIterator();
     }
 
-    private class StackIterator implements Iterator<T> {
+    private class BagIterator implements Iterator<T> {
         private Node<T> current = head;
 
         @Override
@@ -65,7 +45,9 @@ public final class LinkedStack<T> implements Stack<T> {
 
         @Override
         public T next() {
-            if (!hasNext()) throw new NoSuchElementException("No more elements in the stack.");
+            if (!hasNext()) {
+                throw new NoSuchElementException("No more elements in the bag.");
+            }
             T data = current.data;
             current = current.next;
             return data;

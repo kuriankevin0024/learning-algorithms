@@ -3,24 +3,24 @@ package com.learning.algorithms.queue;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedQueue<T> implements Queue<T> {
+public final class LinkedQueue<T> implements Queue<T> {
 
     private int size = 0;
     private Node<T> head = null;
     private Node<T> tail = null;
 
     private static class Node<T> {
-        final T value;
+        final T data;
         Node<T> next;
 
-        Node(T value) {
-            this.value = value;
+        Node(T data) {
+            this.data = data;
         }
     }
 
     @Override
-    public void enqueue(T item) {
-        Node<T> newNode = new Node<>(item);
+    public void enqueue(T element) {
+        Node<T> newNode = new Node<>(element);
         if (isEmpty()) {
             head = newNode;
         } else {
@@ -32,16 +32,12 @@ public class LinkedQueue<T> implements Queue<T> {
 
     @Override
     public T dequeue() {
-        if (isEmpty()) {
-            throw new NoSuchElementException("Queue is empty");
-        }
-        T item = head.value;
+        if (isEmpty()) throw new NoSuchElementException("Queue is empty");
+        T element = head.data;
         head = head.next;
-        if (head == null) {
-            tail = null;
-        }
+        if (head == null) tail = null;
         size--;
-        return item;
+        return element;
     }
 
     @Override
@@ -56,10 +52,8 @@ public class LinkedQueue<T> implements Queue<T> {
 
     @Override
     public T peek() {
-        if (isEmpty()) {
-            throw new NoSuchElementException("Queue is empty");
-        }
-        return head.value;
+        if (isEmpty()) throw new NoSuchElementException("Queue is empty");
+        return head.data;
     }
 
     @Override
@@ -77,12 +71,10 @@ public class LinkedQueue<T> implements Queue<T> {
 
         @Override
         public T next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException();
-            }
-            T value = current.value;
+            if (!hasNext()) throw new NoSuchElementException("No more elements in the queue.");
+            T data = current.data;
             current = current.next;
-            return value;
+            return data;
         }
     }
 }

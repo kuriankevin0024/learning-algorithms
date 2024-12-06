@@ -3,7 +3,7 @@ package com.learning.algorithms.stack;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ResizingArrayStack<T> implements Stack<T> {
+public final class ResizingArrayStack<T> implements Stack<T> {
 
     private int size = 0;
     private T[] stack;
@@ -14,24 +14,18 @@ public class ResizingArrayStack<T> implements Stack<T> {
     }
 
     @Override
-    public void push(T item) {
-        if (size == stack.length) {
-            resize(2 * stack.length);
-        }
-        stack[size++] = item;
+    public void push(T element) {
+        if (size == stack.length) resize(2 * stack.length);
+        stack[size++] = element;
     }
 
     @Override
     public T pop() {
-        if (isEmpty()) {
-            throw new NoSuchElementException("Stack is empty");
-        }
-        T item = stack[--size];
+        if (isEmpty()) throw new NoSuchElementException("Stack is empty");
+        T element = stack[--size];
         stack[size] = null;
-        if (size > 0 && size == stack.length / 4) {
-            resize(stack.length / 2);
-        }
-        return item;
+        if (size > 0 && size == stack.length / 4) resize(stack.length / 2);
+        return element;
     }
 
     @Override
@@ -46,21 +40,15 @@ public class ResizingArrayStack<T> implements Stack<T> {
 
     @Override
     public T peek() {
-        if (isEmpty()) {
-            throw new NoSuchElementException("Stack is empty");
-        }
+        if (isEmpty()) throw new NoSuchElementException("Stack is empty");
         return stack[size - 1];
     }
 
     @SuppressWarnings("unchecked")
     private void resize(int capacity) {
-        T[] copy = (T[]) new Object[capacity];
-        // for better performance us arraycopy
-        // System.arraycopy(stack, 0, copy, 0, size);
-        for (int i = 0; i < stack.length; i++) {
-            copy[i] = stack[i];
-        }
-        stack = copy;
+        T[] newStack = (T[]) new Object[capacity];
+        System.arraycopy(stack, 0, newStack, 0, size);
+        stack = newStack;
     }
 
     @Override
@@ -78,9 +66,7 @@ public class ResizingArrayStack<T> implements Stack<T> {
 
         @Override
         public T next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException();
-            }
+            if (!hasNext()) throw new NoSuchElementException("No more elements in the stack.");
             return stack[--current];
         }
     }

@@ -1,4 +1,8 @@
 
+Not Thread Safe
+Not Serializable
+
+
 Bags Queues and Stacks
 
 Stack

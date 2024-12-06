@@ -3,7 +3,7 @@ package com.learning.algorithms.queue;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class FixedArrayQueue<T> implements Queue<T> {
+public final class FixedArrayQueue<T> implements Queue<T> {
 
     private int size = 0;
     private int front = 0;
@@ -12,32 +12,26 @@ public class FixedArrayQueue<T> implements Queue<T> {
 
     @SuppressWarnings("unchecked")
     public FixedArrayQueue(int capacity) {
-        if (capacity <= 0) {
-            throw new IllegalArgumentException("Capacity must be positive");
-        }
+        if (capacity <= 0) throw new IllegalArgumentException("Capacity must be positive");
         queue = (T[]) new Object[capacity];
     }
 
     @Override
-    public void enqueue(T item) {
-        if (size == queue.length) {
-            throw new IllegalStateException("Queue is full");
-        }
-        queue[rear] = item;
+    public void enqueue(T element) {
+        if (size == queue.length) throw new IllegalStateException("Queue is full");
+        queue[rear] = element;
         rear = (rear + 1) % queue.length;
         size++;
     }
 
     @Override
     public T dequeue() {
-        if (isEmpty()) {
-            throw new NoSuchElementException("Queue is empty");
-        }
-        T item = queue[front];
+        if (isEmpty()) throw new NoSuchElementException("Queue is empty");
+        T element = queue[front];
         queue[front] = null;
         front = (front + 1) % queue.length;
         size--;
-        return item;
+        return element;
     }
 
     @Override
@@ -52,9 +46,7 @@ public class FixedArrayQueue<T> implements Queue<T> {
 
     @Override
     public T peek() {
-        if (isEmpty()) {
-            throw new NoSuchElementException("Queue is empty");
-        }
+        if (isEmpty()) throw new NoSuchElementException("Queue is empty");
         return queue[front];
     }
 
@@ -73,16 +65,14 @@ public class FixedArrayQueue<T> implements Queue<T> {
 
         @Override
         public T next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException();
-            }
-            T item = queue[(front + currentIndex) % queue.length];
+            if (!hasNext()) throw new NoSuchElementException("No more elements in the queue.");
+            T element = queue[(front + currentIndex) % queue.length];
             currentIndex++;
-            return item;
+            return element;
         }
     }
 
-    public int remainingCapacity() {
+    public int getRemainingCapacity() {
         return queue.length - size;
     }
 }
