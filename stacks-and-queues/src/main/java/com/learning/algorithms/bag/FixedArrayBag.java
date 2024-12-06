@@ -18,7 +18,9 @@ public final class FixedArrayBag<T> implements Bag<T> {
 
     @Override
     public void add(T element) {
-        if (size == bag.length) throw new IllegalStateException("Bag is full.");
+        if (size == bag.length) {
+            throw new IllegalStateException("Bag is full.");
+        }
         bag[size++] = element;
     }
 
@@ -42,7 +44,9 @@ public final class FixedArrayBag<T> implements Bag<T> {
 
         @Override
         public T next() {
-            if (!hasNext()) throw new NoSuchElementException("No more elements in the bag.");
+            if (!hasNext()) {
+                throw new NoSuchElementException("No more elements in the bag.");
+            }
             return bag[currentIndex++];
         }
     }

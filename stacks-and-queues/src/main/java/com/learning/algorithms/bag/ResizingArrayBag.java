@@ -15,13 +15,22 @@ public final class ResizingArrayBag<T> implements Bag<T> {
 
     @Override
     public void add(T element) {
-        if (size == bag.length) resize(2 * bag.length);
+        if (size == bag.length) {
+            resize(2 * bag.length);
+        }
         bag[size++] = element;
     }
 
     @Override
     public int size() {
         return size;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void resize(int newCapacity) {
+        T[] newBag = (T[]) new Object[newCapacity];
+        System.arraycopy(bag, 0, newBag, 0, size);
+        bag = newBag;
     }
 
     @Override
@@ -39,15 +48,10 @@ public final class ResizingArrayBag<T> implements Bag<T> {
 
         @Override
         public T next() {
-            if (!hasNext()) throw new NoSuchElementException("No more elements in the bag.");
+            if (!hasNext()) {
+                throw new NoSuchElementException("No more elements in the bag.");
+            }
             return bag[currentIndex++];
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    private void resize(int newCapacity) {
-        T[] newBag = (T[]) new Object[newCapacity];
-        System.arraycopy(bag, 0, newBag, 0, size);
-        bag = newBag;
     }
 }
