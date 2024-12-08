@@ -2,6 +2,7 @@ package com.learning.algorithms.bag;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public final class ResizingArrayBag<T> implements Bag<T> {
 
@@ -16,9 +17,28 @@ public final class ResizingArrayBag<T> implements Bag<T> {
     @Override
     public void add(T element) {
         if (size == bag.length) {
-            resize(2 * bag.length);
+            resize(bag.length * 2);
         }
         bag[size++] = element;
+    }
+
+    public void remove(T element) {
+        for (int i = 0; i < size; i++) {
+            if (Objects.equals(bag[i], element)) {
+                for (int j = i; j < size - 1; j++) {
+                    bag[j] = bag[j + 1];
+                }
+                bag[--size] = null;
+                if (size > 0 && size == bag.length / 4) {
+                    resize(bag.length / 2);
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     @Override

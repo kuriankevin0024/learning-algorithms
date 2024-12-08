@@ -16,7 +16,7 @@ public final class ResizingArrayStack<T> implements Stack<T> {
     @Override
     public void push(T element) {
         if (size == stack.length) {
-            resize(2 * stack.length);
+            resize(stack.length * 2);
         }
         stack[size++] = element;
     }
@@ -24,7 +24,7 @@ public final class ResizingArrayStack<T> implements Stack<T> {
     @Override
     public T pop() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Stack is empty");
+            throw new NoSuchElementException("Stack is empty.");
         }
         T element = stack[--size];
         stack[size] = null;
@@ -47,7 +47,7 @@ public final class ResizingArrayStack<T> implements Stack<T> {
     @Override
     public T peek() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Stack is empty");
+            throw new NoSuchElementException("Stack is empty.");
         }
         return stack[size - 1];
     }

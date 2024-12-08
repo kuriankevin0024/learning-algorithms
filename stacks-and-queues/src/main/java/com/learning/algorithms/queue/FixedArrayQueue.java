@@ -13,7 +13,7 @@ public final class FixedArrayQueue<T> implements Queue<T> {
     @SuppressWarnings("unchecked")
     public FixedArrayQueue(int capacity) {
         if (capacity <= 0) {
-            throw new IllegalArgumentException("Capacity must be positive");
+            throw new IllegalArgumentException("Capacity must be positive.");
         }
         queue = (T[]) new Object[capacity];
     }
@@ -21,7 +21,7 @@ public final class FixedArrayQueue<T> implements Queue<T> {
     @Override
     public void enqueue(T element) {
         if (size == queue.length) {
-            throw new IllegalStateException("Queue is full");
+            throw new IllegalStateException("Queue is full.");
         }
         queue[tail] = element;
         tail = (tail + 1) % queue.length;
@@ -31,7 +31,7 @@ public final class FixedArrayQueue<T> implements Queue<T> {
     @Override
     public T dequeue() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Queue is empty");
+            throw new NoSuchElementException("Queue is empty.");
         }
         T element = queue[head];
         queue[head] = null;
@@ -53,7 +53,7 @@ public final class FixedArrayQueue<T> implements Queue<T> {
     @Override
     public T peek() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Queue is empty");}
+            throw new NoSuchElementException("Queue is empty.");}
         return queue[head];
     }
 

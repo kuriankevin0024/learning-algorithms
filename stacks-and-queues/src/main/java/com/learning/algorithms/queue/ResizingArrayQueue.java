@@ -18,10 +18,9 @@ public final class ResizingArrayQueue<T> implements Queue<T> {
     @Override
     public void enqueue(T element) {
         if (size == queue.length) {
-            resize(2 * queue.length);
+            resize(queue.length * 2);
         }
-        queue[tail] = element;
-        tail++;
+        queue[tail++] = element;
         if (tail == queue.length) {
             tail = 0;
         }
@@ -31,11 +30,10 @@ public final class ResizingArrayQueue<T> implements Queue<T> {
     @Override
     public T dequeue() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Queue is empty");
+            throw new NoSuchElementException("Queue is empty.");
         }
         T element = queue[head];
-        queue[head] = null;
-        head++;
+        queue[head++] = null;
         if (head == queue.length) {
             head = 0;
         }
@@ -59,7 +57,7 @@ public final class ResizingArrayQueue<T> implements Queue<T> {
     @Override
     public T peek() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Queue is empty");
+            throw new NoSuchElementException("Queue is empty.");
         }
         return queue[head];
     }

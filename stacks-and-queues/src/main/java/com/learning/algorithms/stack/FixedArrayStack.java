@@ -11,7 +11,7 @@ public final class FixedArrayStack<T> implements Stack<T> {
     @SuppressWarnings("unchecked")
     public FixedArrayStack(int capacity) {
         if (capacity <= 0) {
-            throw new IllegalArgumentException("Capacity must be positive");
+            throw new IllegalArgumentException("Capacity must be positive.");
         }
         stack = (T[]) new Object[capacity];
     }
@@ -19,7 +19,7 @@ public final class FixedArrayStack<T> implements Stack<T> {
     @Override
     public void push(T element) {
         if (size == stack.length) {
-            throw new IllegalStateException("Stack is full");
+            throw new IllegalStateException("Stack is full.");
         }
         stack[size++] = element;
     }
@@ -27,7 +27,7 @@ public final class FixedArrayStack<T> implements Stack<T> {
     @Override
     public T pop() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Stack is empty");
+            throw new NoSuchElementException("Stack is empty.");
         }
         T element = stack[--size];
         stack[size] = null;
@@ -47,7 +47,7 @@ public final class FixedArrayStack<T> implements Stack<T> {
     @Override
     public T peek() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Stack is empty");
+            throw new NoSuchElementException("Stack is empty.");
         }
         return stack[size - 1];
     }

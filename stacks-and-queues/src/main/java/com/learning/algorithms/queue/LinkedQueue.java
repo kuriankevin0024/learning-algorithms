@@ -33,7 +33,7 @@ public final class LinkedQueue<T> implements Queue<T> {
     @Override
     public T dequeue() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Queue is empty");
+            throw new NoSuchElementException("Queue is empty.");
         }
         T element = head.data;
         head = head.next;
@@ -57,7 +57,7 @@ public final class LinkedQueue<T> implements Queue<T> {
     @Override
     public T peek() {
         if (isEmpty()) {
-            throw new NoSuchElementException("Queue is empty");
+            throw new NoSuchElementException("Queue is empty.");
         }
         return head.data;
     }

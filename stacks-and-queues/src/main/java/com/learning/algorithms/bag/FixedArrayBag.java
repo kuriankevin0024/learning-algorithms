@@ -2,6 +2,7 @@ package com.learning.algorithms.bag;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public final class FixedArrayBag<T> implements Bag<T> {
 
@@ -22,6 +23,22 @@ public final class FixedArrayBag<T> implements Bag<T> {
             throw new IllegalStateException("Bag is full.");
         }
         bag[size++] = element;
+    }
+
+    public void remove(T element) {
+        for (int i = 0; i < size; i++) {
+            if (Objects.equals(bag[i], element)) {
+                for (int j = i; j < size - 1; j++) {
+                    bag[j] = bag[j + 1];
+                }
+                bag[--size] = null;
+            }
+        }
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     @Override
