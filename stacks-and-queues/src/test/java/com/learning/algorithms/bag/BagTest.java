@@ -41,5 +41,13 @@ public class BagTest {
         }
         Assert.assertEquals(5 , count);
         Assert.assertEquals(expected, result);
+
+        bag.remove("a");
+        bag.remove("b");
+        bag.remove("c");
+        bag.remove("d");
+        bag.remove("e");
+
+        Assert.assertTrue(bag.isEmpty());
     }
 }
