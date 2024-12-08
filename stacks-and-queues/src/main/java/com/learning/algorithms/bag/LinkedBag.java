@@ -31,13 +31,14 @@ public final class LinkedBag<T> implements Bag<T> {
             head = head.next;
             size--;
         }
-
+    
         if (head == null) {
             return;
         }
     
-        Node<T> current = head;
-        Node<T> prev = null;
+        Node<T> prev = head;
+        Node<T> current = head.next;
+    
         while (current != null) {
             if (Objects.equals(current.data, element)) {
                 prev.next = current.next;
