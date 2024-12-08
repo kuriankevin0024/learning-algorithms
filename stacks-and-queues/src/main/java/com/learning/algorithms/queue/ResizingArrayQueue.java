@@ -6,8 +6,8 @@ import java.util.NoSuchElementException;
 public final class ResizingArrayQueue<T> implements Queue<T> {
 
     private int size = 0;
-    private int front = 0;
-    private int rear = 0;
+    private int head = 0;
+    private int tail = 0;
     private T[] queue;
 
     @SuppressWarnings("unchecked")
@@ -17,21 +17,32 @@ public final class ResizingArrayQueue<T> implements Queue<T> {
 
     @Override
     public void enqueue(T element) {
-        if (size == queue.length) resize(2 * queue.length);
-        queue[rear++] = element;
-        if (rear == queue.length) rear = 0;
+        if (size == queue.length) {
+            resize(2 * queue.length);
+        }
+        queue[tail] = element;
+        tail++;
+        if (tail == queue.length) {
+            tail = 0;
+        }
         size++;
     }
 
     @Override
     public T dequeue() {
-        if (isEmpty()) throw new NoSuchElementException("Queue is empty");
-        T element = queue[front];
-        queue[front] = null;
-        front++;
-        if (front == queue.length) front = 0;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue is empty");
+        }
+        T element = queue[head];
+        queue[head] = null;
+        head++;
+        if (head == queue.length) {
+            head = 0;
+        }
         size--;
-        if (size > 0 && size == queue.length / 4) resize(queue.length / 2);
+        if (size > 0 && size == queue.length / 4) {
+            resize(queue.length / 2);
+        }
         return element;
     }
 
@@ -47,19 +58,21 @@ public final class ResizingArrayQueue<T> implements Queue<T> {
 
     @Override
     public T peek() {
-        if (isEmpty()) throw new NoSuchElementException("Queue is empty");
-        return queue[front];
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue is empty");
+        }
+        return queue[head];
     }
 
     @SuppressWarnings("unchecked")
     private void resize(int newCapacity) {
         T[] newQueue = (T[]) new Object[newCapacity];
         for (int i = 0; i < size; i++) {
-            newQueue[i] = queue[(front + i) % queue.length];
+            newQueue[i] = queue[(head + i) % queue.length];
         }
         queue = newQueue;
-        front = 0;
-        rear = size;
+        head = 0;
+        tail = size;
     }
 
     @Override
@@ -77,8 +90,10 @@ public final class ResizingArrayQueue<T> implements Queue<T> {
 
         @Override
         public T next() {
-            if (!hasNext()) throw new NoSuchElementException("No more elements in the queue.");
-            T element = queue[(front + currentIndex) % queue.length];
+            if (!hasNext()) {
+                throw new NoSuchElementException("No more elements in the queue.");
+            }
+            T element = queue[(head + currentIndex) % queue.length];
             currentIndex++;
             return element;
         }
