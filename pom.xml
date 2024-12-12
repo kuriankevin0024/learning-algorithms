@@ -17,6 +17,7 @@
     <modules>
         <module>union-find</module>
         <module>stacks-and-queues</module>
+        <module>elementary-sort</module>
     </modules>
 
     <build>
